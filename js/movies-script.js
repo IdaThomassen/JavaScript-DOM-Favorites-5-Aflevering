@@ -104,44 +104,48 @@ function isFavorite(id) {
 
 function displayMovies(movieList) {
   const html = movieList
-    .map((item) => {
+    .map((movie) => {
       let star;
 
-      if (isFavorite(item.id)) {
+      if (isFavorite(movie.id)) {
         star = "★";
       } else {
         star = "☆";
       }
 
       return `
-    <article>
-    <button class="favorite-btn" data-id="${item.id}" aria-label="Vælg favorit">
-                ${star}
-            </button>
-            <h2>${item.title}</h2>
-            <h3><span id="genre">Genre: </span> ${item.genre}</h3>
-            <h3><span id="year">Year: </span> ${item.year}</h3>
-            <p><span id="duration">Duration: </span> ${item.duration}</p>
-            <figure>
-        <a href="${movie.url}"><img src="${movie.img}" alt="${movie.title}"></a>
-        <figcaption>Læs mere på IMDB</figcaption>
-        </figure>
-    </article>
-    `;
+  <article>
+  <div class="movie-header">
+    <h2>${movie.title}</h2>
+    <button class="favorite-btn" data-id="${movie.id}">
+      ${star}
+    </button>
+ </div>
+    <h3>Genre: ${movie.genre}</h3>
+    <h3>Year: ${movie.year}</h3>
+    <p>Duration: ${movie.duration}</p>
+<figure class="movie-img">
+    <a href="${movie.url}">
+      <img src="${movie.img}" alt="${movie.title}">
+    </a>
+     <figcaption>Læs mere på IMDB</figcaption>
+</figure>
+</article>
+`;
     })
     .join("");
-}
 
-moviesContainer.innerHTML = html;
+  moviesContainer.innerHTML = html;
 
-const favoriteButtons = document.querySelectorAll(".favorite-btn");
+  const favoriteButtons = document.querySelectorAll(".favorite-btn");
 
-favoriteButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const exhibitionId = Number(button.dataset.id);
-    toggleFavorite(exhibitionId);
+  favoriteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const movieId = Number(button.dataset.id);
+      toggleFavorite(movieId);
+    });
   });
-});
+}
 
 function toggleFavorite(id) {
   if (favoriteIds.includes(id)) {
@@ -154,7 +158,7 @@ function toggleFavorite(id) {
 
   localStorage.setItem("favoriteMovies", JSON.stringify(favoriteIds));
 
-  displayExhibitions(exhibitions);
+  displayMovies(movies);
 }
 
-displayExhibitions(exhibitions);
+displayMovies(movies);
