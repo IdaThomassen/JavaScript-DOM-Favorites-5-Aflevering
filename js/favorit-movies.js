@@ -93,10 +93,15 @@ const movies = [
   },
 ];
 
+// Henter containeren fra HTML, hvor favorit-filmene skal vises
 const favoritesContainer = document.getElementById("favorites-container");
 
+// Henter gemte favorit-film fra localStorage
+// Hvis der ikke findes nogen, starter vi med en tom liste
+// || = eller [] = tom
 let favoritIds = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
 
+// Finder de film som brugeren har markeret som favoritter
 function getFavoriteMovies() {
   return movies.filter((movie) => favoritIds.includes(movie.id));
 }
@@ -104,17 +109,14 @@ function getFavoriteMovies() {
 function displayMovies() {
   const favoriteMovies = getFavoriteMovies();
 
-  if (!favoritesContainer) {
-    console.error("Mangler #favorites-container i HTML");
-    return;
-  }
-
+  // viser at brugeren ikke har valgt nogle favorit film
   if (favoriteMovies.length === 0) {
     favoritesContainer.innerHTML =
       "<p>Du har endnu ikke valgt nogen favorit film</p>";
     return;
   }
 
+  // Opretter HTML for hver favoritfilm
   const html = favoriteMovies
     .map((movie) => {
       return `
@@ -140,5 +142,5 @@ function displayMovies() {
 
   favoritesContainer.innerHTML = html;
 }
-
+// Kører funktionen én gang, så favoritter vises med det samme
 displayMovies();
