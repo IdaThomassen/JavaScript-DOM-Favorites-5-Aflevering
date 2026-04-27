@@ -46,7 +46,6 @@ const movies = [
     img: "img/it.webp",
     url: "https://www.imdb.com/title/tt1396484/",
   },
-
   {
     id: 6,
     title: "The Hangover",
@@ -93,3 +92,58 @@ const movies = [
     url: "https://www.imdb.com/title/tt0110912/",
   },
 ];
+
+// DOM
+const favoritesContainer = document.getElementById("favorites-container");
+
+// ❗ FIX: korrekt localStorage key
+let favoritIds = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+
+// Funktion til at hente favoritfilm dynamisk
+function getFavoriteMovies() {
+  return movies.filter((movie) => favoritIds.includes(movie.id));
+}
+
+// Render funktion
+function displayMovies() {
+  const favoriteMovies = getFavoriteMovies();
+
+  if (!favoritesContainer) {
+    console.error("Mangler #favorites-container i HTML");
+    return;
+  }
+
+  if (favoriteMovies.length === 0) {
+    favoritesContainer.innerHTML =
+      "<p>Du har endnu ikke valgt nogen favorit film</p>";
+    return;
+  }
+
+  const html = favoriteMovies
+    .map((movie) => {
+      return `
+        <article>
+          <div class="movie-header">
+            <h2>${movie.title}</h2>
+          </div>
+
+          <h3>Genre: ${movie.genre}</h3>
+          <h3>Year: ${movie.year}</h3>
+          <p>Duration: ${movie.duration}</p>
+
+          <figure class="movie-img">
+            <a href="${movie.url}" target="_blank">
+              <img src="${movie.img}" alt="${movie.title}">
+            </a>
+            <figcaption>Læs mere på IMDB</figcaption>
+          </figure>
+        </article>
+      `;
+    })
+    .join("");
+
+  favoritesContainer.innerHTML = html;
+}
+
+// Start
+displayMovies();
