@@ -36,14 +36,14 @@ body {
 #movies-container h2 {
   margin-top: 0;
   font-size: 1.4rem;
-  color: #2c3e50;
+  color: #000000;
 }
 
 /* Her styler jeg placeringen */
 #movies-container h3 {
   font-size: 1rem;
   font-weight: normal;
-  color: #666;
+  color: #323232;
   margin-bottom: 10px;
 }
 
