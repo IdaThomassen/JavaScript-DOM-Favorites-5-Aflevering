@@ -93,18 +93,14 @@ const movies = [
   },
 ];
 
-// DOM
 const favoritesContainer = document.getElementById("favorites-container");
 
-// ❗ FIX: korrekt localStorage key
 let favoritIds = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
 
-// Funktion til at hente favoritfilm dynamisk
 function getFavoriteMovies() {
   return movies.filter((movie) => favoritIds.includes(movie.id));
 }
 
-// Render funktion
 function displayMovies() {
   const favoriteMovies = getFavoriteMovies();
 
@@ -145,5 +141,4 @@ function displayMovies() {
   favoritesContainer.innerHTML = html;
 }
 
-// Start
 displayMovies();
